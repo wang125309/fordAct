@@ -30719,6 +30719,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
     $scope.goNews = function() {
         thirdLevel();
         $scope.eleTitle = '新闻稿件';
+        $scope.upShow = false;
         $.get("/backend/getNewsById/?id=1",function(data){
             $scope.eleDesc = function() {
                 return $sce.trustAsHtml(data.data.desc);  
@@ -30865,6 +30866,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         thirdLevel();
         $scope.upShow = false;
         $scope.backShow = false;
+        $scope.copyShow = false;
         $scope.eleTitle = '位置信息';
         $scope.eleDesc = function() {
             return $sce.trustAsHtml('<img class="pos" src="/static/image/posimg.jpg"/>');  
