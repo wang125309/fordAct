@@ -177,6 +177,8 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
     };
     $scope.goPos = function() {
         thirdLevel();
+        $scope.upShow = false;
+        $scope.backShow = false;
         $scope.eleTitle = '位置信息';
         $scope.eleDesc = function() {
             return $sce.trustAsHtml('<img class="pos" src="/static/image/posimg.jpg"/>');  
