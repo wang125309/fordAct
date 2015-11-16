@@ -30697,6 +30697,14 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         $scope.detailsShow = true;
         $scope.blur = 'blur';
         $scope.eleShow = true;
+        $scope.eleTitle = '新闻稿件';
+        $.get("/backend/getNewsById/?id=1",function(data){
+            $scope.eleDesc = function() {
+                return $sce.trustAsHtml(data.data.desc);  
+            }();
+            $scope.$apply();
+        });
+
     };
 
     $scope.goProduct = function() {
@@ -30798,6 +30806,8 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         else if(id == 4) {
             id = 9;
         }
+        $scope.leaderImgShow = true;
+        $scope.leaderImg = "/static/image/" + id + ".jpg";
         $.get("/backend/getCulById/?id="+id,function(data){
             $scope.eleTitle = data.data.title; 
             $scope.eleDesc = function() {
@@ -30877,6 +30887,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
             $scope.leaderListShow = true;
             $scope.backShow = true; 
             $scope.eleShow = false;
+
         }
     };
     $scope.close = function() {
@@ -30890,6 +30901,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         $scope.comListShow = false;
         $scope.leaderListShow = false;
         $scope.leaderShow = false;
+        $scope.leaderImgShow = false;
     };
 
 }])

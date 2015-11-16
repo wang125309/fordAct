@@ -91,6 +91,7 @@ include ./lib/header.jade
                             div.border=""
                             div.border-down=""
                         div.ele-desc
+                            img(ng-show="leaderImgShow==true",ng-src="{{ leaderImg }}",style="width:30%")
                             div.desc(ng-bind-html="eleDesc")
             div.tools
                 div.tool-bar
