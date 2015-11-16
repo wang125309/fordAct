@@ -13,32 +13,33 @@ include ./lib/header.jade
         })();
     body(ng-app="app",ng-controller="indexCtrl",init,ng-cloak)
         div.share=""
+        div.copy(ng-show="copy==true",ng-click="closeCopy()") 长按复制
         section(class="page page1")
-            div.background=""
-            div.nav=""
-            div.bottom
-                div.finger=""
-                div.text=""
+            div.background
+                div.nav=""
+                div.bottom
+                    div.finger=""
+                    div.text=""
         section(class="page page2 {{ blur }}")
-            div.background=""
-            div.nav=""
-            div.upside
-                div.btn-line
-                    div.left
-                        div.news-btn.button(ng-click="goNews()") 新闻资料
-                    div.right
-                        div.product-btn.button(ng-click="goProduct()") 产品
-                div.btn-line
-                    div.left
-                        div.cul-btn.button(ng-click="goCul()") 品牌文化
-                    div.right
-                        div.desc-btn.button(ng-click="goCom()") 企业及高管
-                div.btn-line
-                    div.left
-                        div.pos-btn.button(ng-click="goPos()") 位置信息
-                    div.right
-                        div.img-btn.button(ng-click="goImg()") 图片资料
-            div.bottom=""
+            div.background
+                div.nav=""
+                div.upside
+                    div.btn-line
+                        div.left
+                            div.news-btn.button(ng-click="goNews()") 新闻资料
+                        div.right
+                            div.product-btn.button(ng-click="goProduct()") 产品
+                    div.btn-line
+                        div.left
+                            div.cul-btn.button(ng-click="goCul()") 品牌文化
+                        div.right
+                            div.desc-btn.button(ng-click="goCom()") 企业及高管
+                    div.btn-line
+                        div.left
+                            div.pos-btn.button(ng-click="goPos()") 位置信息
+                        div.right
+                            div.img-btn.button(ng-click="goImg()") 图片资料
+                div.bottom=""
         div.details(ng-show="detailsShow==true",class="{{ detailsShow }}")
             div.main
                 div.close(ng-click="close()")=""
@@ -96,7 +97,7 @@ include ./lib/header.jade
             div.tools
                 div.tool-bar
                     div.back-tool(ng-click="back()",ng-show="backShow==true")=""
-                    div.copy-tool(ng-click="copy()")=""
+                    div.copy-tool(ng-click="goCopy()",ng-show="copyShow==true")=""
                     div.up-tool(ng-click="up()",ng-show="upShow==true")=""
 
     script(language="javascript",src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js")

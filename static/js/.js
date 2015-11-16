@@ -30693,10 +30693,31 @@ require("../js/share.min.js");
 
 indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope','$sce',function($scope,$sce){
     $scope.detailsShow = false;
-    $scope.goNews = function() {
+    firstLevel = function() {
+        $scope.detailsShow = true;
+        $scope.blur = 'blur';
+        $scope.backShow = false;
+        $scope.copyShow = false;
+        $scope.upShow = false;
+    };
+    secondLevel = function() {
+        $scope.detailsShow = true;
+        $scope.blur = 'blur';
+        $scope.backShow = true;
+        $scope.copyShow = false;
+        $scope.upShow = false;
+    };
+    thirdLevel = function() {
         $scope.detailsShow = true;
         $scope.blur = 'blur';
         $scope.eleShow = true;
+        $scope.backShow = false;
+        $scope.copyShow = true;
+        $scope.upShow = true;
+    };
+    
+    $scope.goNews = function() {
+        thirdLevel();
         $scope.eleTitle = '新闻稿件';
         $.get("/backend/getNewsById/?id=1",function(data){
             $scope.eleDesc = function() {
@@ -30704,42 +30725,37 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
             }();
             $scope.$apply();
         });
-
     };
 
     $scope.goProduct = function() {
-        $scope.detailsShow = true;
+        firstLevel();
         $scope.productShow = true;
-        $scope.blur = 'blur';
         $scope.type = 'product';
     };
     $scope.goProductAnnc = function() {
         $scope.productListShow = true;
         $scope.productShow = false;
-        $scope.backShow = true;
+        secondLevel();
         $.get("/backend/getProductList/",function(data){
             $scope.products = data.data;
             $scope.$apply();
         });
     };
     $scope.back = function() {
+        $scope.backShow = false;
+        firstLevel();
         if($scope.type == 'product') {
             $scope.productListShow = false;
             $scope.productShow = true;
-            $scope.backShow = false;
+            
         }
         else if($scope.type == 'com') {
-            $scope.productListShow = false;
             $scope.comListShow = false;
             $scope.comShow = true;
-            $scope.backShow = false;
-            $scope.productShow = false;
         }
         else if($scope.type == 'leader') {
-            $scope.productListShow = false;
             $scope.leaderListShow = false;
             $scope.comShow = true;
-            $scope.backShow = false;
         }
     };
     $scope.goProductSettings = function() {
@@ -30750,9 +30766,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         $.get("/backend/getProductById/?id="+id,function(data){
             $scope.productShow = false;
             $scope.productListShow = false;
-            $scope.eleShow = true;
-            $scope.backShow = false;
-            $scope.upShow = true;
+            thirdLevel();
             $scope.type = 'product';
             $scope.eleTitle = data.data.title;
             $scope.eleDesc = function() {
@@ -30762,8 +30776,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         });
     };
     $scope.goCul = function() {
-        $scope.detailsShow = true;
-        $scope.blur = 'blur';
+        thirdLevel();
         $scope.eleShow = true;
         $scope.upShow = false;
         $.get("/backend/getCulById/?id=1",function(data){
@@ -30775,24 +30788,25 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         });
     };
     $scope.goCom = function() {
-        $scope.detailsShow = true;
-        $scope.blur = 'blur';
+        firstLevel();
         $scope.comShow = true ;
     };
+    $scope.goCopy = function() {
+        $scope.copy = true;
+    };
+    $scope.closeCopy = function() {
+        $scope.copy = false;
+    };
     $scope.goLeader = function() {
+        secondLevel();
         $scope.leaderListShow = true;
-        $scope.backShow = true;
-        $scope.upShow = false;
         $scope.type = 'leader';
         $scope.comShow = false; 
     };
     $scope.goLeaderDetail = function(id) {
         $scope.comShow = false;
-        $scope.detailsShow = true;
-        $scope.blur = 'blur';
-        $scope.eleShow = true;
+        thirdLevel();
         $scope.type = 'leader';
-        $scope.upShow = true;
         $scope.leaderListShow = false;
         if(id == 1) {
             id = 6;
@@ -30821,19 +30835,13 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         if (!id) {
             $scope.comListShow = true;
             $scope.comShow = false;
-            $scope.detailsShow = true;
-            $scope.blur = 'blur';
-            $scope.backShow = true;
+            secondLevel();
             $scope.type = 'com';
         }
         else if(id == 1) {
             $scope.comListShow = false;
-            $scope.eleShow = true;
-            $scope.backShow = false;
-            $scope.upShow = true;
+            thirdLevel();
             $.get("/backend/getCulById/?id=4",function(data){
-                $scope.detailsShow = true;
-                $scope.blur ='blur';
                 $scope.eleTitle = data.data.title;
                 $scope.eleDesc = function() {
                     return $sce.trustAsHtml(data.data.desc);  
@@ -30843,12 +30851,8 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         }
         else if(id == 2) {
             $scope.comListShow = false;
-            $scope.eleShow = true;
-            $scope.backShow = false;
-            $scope.upShow = true;
+            thirdLevel();
             $.get("/backend/getCulById/?id=5",function(data){
-                $scope.detailsShow = true;
-                $scope.blur ='blur';
                 $scope.eleTitle = data.data.title;
                 $scope.eleDesc = function() {
                     return $sce.trustAsHtml(data.data.desc);  
@@ -30858,36 +30862,26 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         }
     };
     $scope.goPos = function() {
-        $scope.detailsShow = true;
-        $scope.eleShow = true;
-        $scope.blur = 'blur';
+        thirdLevel();
         $scope.eleTitle = '位置信息';
         $scope.eleDesc = function() {
             return $sce.trustAsHtml('<img class="pos" src="/static/image/posimg.jpg"/>');  
         }();
     };
     $scope.goImg = function() {
-
         location.href = '';
     };
     $scope.up = function() {
-        $scope.upShow = false;
+        secondLevel();
+        $scope.eleShow = false;
         if($scope.type == 'product') {
             $scope.productListShow = true;
-            $scope.eleShow = false;
-            $scope.backShow = true;
-
         }
         else if($scope.type == 'com') {
             $scope.comListShow = true;
-            $scope.backShow = true; 
-            $scope.eleShow = false;
         }
         else if($scope.type == 'leader') {
             $scope.leaderListShow = true;
-            $scope.backShow = true; 
-            $scope.eleShow = false;
-
         }
     };
     $scope.close = function() {
@@ -30897,6 +30891,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         $scope.productShow = false;
         $scope.productListShow = false;
         $scope.blur = '';
+        $scope.copyShow = true;
         $scope.comShow = false ;
         $scope.comListShow = false;
         $scope.leaderListShow = false;
@@ -30924,5 +30919,5 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
 indexCtrl.$inject = ['$scope','indexCtrl']; 
 
 },{"../../bower_components/angular-sanitize/angular-sanitize.min.js":1,"../../bower_components/angular/angular.js":2,"../../bower_components/velocity/velocity.min.js":3,"../../bower_components/zepto/zepto.js":4,"../../bower_components/zeptojs/src/touch.js":5,"../js/share.min.js":7}],7:[function(require,module,exports){
-!function t(e,n,i){function o(a,l){if(!n[a]){if(!e[a]){var c="function"==typeof require&&require;if(!l&&c)return c(a,!0);if(r)return r(a,!0);throw new Error("Cannot find module '"+a+"'")}var f=n[a]={exports:{}};e[a][0].call(f.exports,function(t){var n=e[a][1][t];return o(n?n:t)},f,f.exports,t,e,n,i)}return n[a].exports}for(var r="function"==typeof require&&require,a=0;a<i.length;a++)o(i[a]);return o}({1:[function(){$(function(){$.post("/wx/portal/wxconfig/",{url:location.href},function(t){wx.config(t),wx.ready(function(){wx.onMenuShareTimeline({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"}),wx.onMenuShareAppMessage({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"})}),wx.error(function(){$.get("/wx/portal/update_access_token/",function(){$.post("/wx/portal/wxconfig/",{url:location.href},function(t){wx.config(t),wx.ready(function(){wx.onMenuShareTimeline({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"}),wx.onMenuShareAppMessage({link:"http://football.qingdianer.com",imgUrl:"http://football.qingdianer.com/static/image/share-image.jpg",title:"呐喊吧！为国足加油！",desc:"喊出你的最强者，为中国队空中加油！更有足球装备等你来赢！不吝铁肺，放胆来试！"})})})})})})})},{}]},{},[1]);
+!function n(r,e,o){function t(a,f){if(!e[a]){if(!r[a]){var c="function"==typeof require&&require;if(!f&&c)return c(a,!0);if(i)return i(a,!0);throw new Error("Cannot find module '"+a+"'")}var u=e[a]={exports:{}};r[a][0].call(u.exports,function(n){var e=r[a][1][n];return t(e?e:n)},u,u.exports,n,r,e,o)}return e[a].exports}for(var i="function"==typeof require&&require,a=0;a<o.length;a++)t(o[a]);return t}({1:[function(){$(function(){$.post("/wx/portal/wxconfig/",{url:location.href},function(n){wx.config(n);var r=function(){shareJson={link:"http://fordact.qingdianer.com",imgUrl:"http://fordact.qingdianer.com/static/image/share-image.jpg",title:"长安福特2015广州车展",desc:"长安福特2015广州车展"},wx.onMenuShareTimeline(shareJson),wx.onMenuShareAppMessage(shareJson)};wx.ready(function(){r()}),wx.error(function(){$.get("/wx/portal/update_access_token/",function(){$.post("/wx/portal/wxconfig/",{url:location.href},function(n){wx.config(n),wx.ready(function(){r()})})})})})})},{}]},{},[1]);
 },{}]},{},[6])

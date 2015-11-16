@@ -7,10 +7,31 @@ require("../js/share.min.js");
 
 indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope','$sce',function($scope,$sce){
     $scope.detailsShow = false;
-    $scope.goNews = function() {
+    firstLevel = function() {
+        $scope.detailsShow = true;
+        $scope.blur = 'blur';
+        $scope.backShow = false;
+        $scope.copyShow = false;
+        $scope.upShow = false;
+    };
+    secondLevel = function() {
+        $scope.detailsShow = true;
+        $scope.blur = 'blur';
+        $scope.backShow = true;
+        $scope.copyShow = false;
+        $scope.upShow = false;
+    };
+    thirdLevel = function() {
         $scope.detailsShow = true;
         $scope.blur = 'blur';
         $scope.eleShow = true;
+        $scope.backShow = false;
+        $scope.copyShow = true;
+        $scope.upShow = true;
+    };
+    
+    $scope.goNews = function() {
+        thirdLevel();
         $scope.eleTitle = '新闻稿件';
         $.get("/backend/getNewsById/?id=1",function(data){
             $scope.eleDesc = function() {
@@ -18,42 +39,37 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
             }();
             $scope.$apply();
         });
-
     };
 
     $scope.goProduct = function() {
-        $scope.detailsShow = true;
+        firstLevel();
         $scope.productShow = true;
-        $scope.blur = 'blur';
         $scope.type = 'product';
     };
     $scope.goProductAnnc = function() {
         $scope.productListShow = true;
         $scope.productShow = false;
-        $scope.backShow = true;
+        secondLevel();
         $.get("/backend/getProductList/",function(data){
             $scope.products = data.data;
             $scope.$apply();
         });
     };
     $scope.back = function() {
+        $scope.backShow = false;
+        firstLevel();
         if($scope.type == 'product') {
             $scope.productListShow = false;
             $scope.productShow = true;
-            $scope.backShow = false;
+            
         }
         else if($scope.type == 'com') {
-            $scope.productListShow = false;
             $scope.comListShow = false;
             $scope.comShow = true;
-            $scope.backShow = false;
-            $scope.productShow = false;
         }
         else if($scope.type == 'leader') {
-            $scope.productListShow = false;
             $scope.leaderListShow = false;
             $scope.comShow = true;
-            $scope.backShow = false;
         }
     };
     $scope.goProductSettings = function() {
@@ -64,9 +80,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         $.get("/backend/getProductById/?id="+id,function(data){
             $scope.productShow = false;
             $scope.productListShow = false;
-            $scope.eleShow = true;
-            $scope.backShow = false;
-            $scope.upShow = true;
+            thirdLevel();
             $scope.type = 'product';
             $scope.eleTitle = data.data.title;
             $scope.eleDesc = function() {
@@ -76,8 +90,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         });
     };
     $scope.goCul = function() {
-        $scope.detailsShow = true;
-        $scope.blur = 'blur';
+        thirdLevel();
         $scope.eleShow = true;
         $scope.upShow = false;
         $.get("/backend/getCulById/?id=1",function(data){
@@ -89,24 +102,25 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         });
     };
     $scope.goCom = function() {
-        $scope.detailsShow = true;
-        $scope.blur = 'blur';
+        firstLevel();
         $scope.comShow = true ;
     };
+    $scope.goCopy = function() {
+        $scope.copy = true;
+    };
+    $scope.closeCopy = function() {
+        $scope.copy = false;
+    };
     $scope.goLeader = function() {
+        secondLevel();
         $scope.leaderListShow = true;
-        $scope.backShow = true;
-        $scope.upShow = false;
         $scope.type = 'leader';
         $scope.comShow = false; 
     };
     $scope.goLeaderDetail = function(id) {
         $scope.comShow = false;
-        $scope.detailsShow = true;
-        $scope.blur = 'blur';
-        $scope.eleShow = true;
+        thirdLevel();
         $scope.type = 'leader';
-        $scope.upShow = true;
         $scope.leaderListShow = false;
         if(id == 1) {
             id = 6;
@@ -135,19 +149,13 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         if (!id) {
             $scope.comListShow = true;
             $scope.comShow = false;
-            $scope.detailsShow = true;
-            $scope.blur = 'blur';
-            $scope.backShow = true;
+            secondLevel();
             $scope.type = 'com';
         }
         else if(id == 1) {
             $scope.comListShow = false;
-            $scope.eleShow = true;
-            $scope.backShow = false;
-            $scope.upShow = true;
+            thirdLevel();
             $.get("/backend/getCulById/?id=4",function(data){
-                $scope.detailsShow = true;
-                $scope.blur ='blur';
                 $scope.eleTitle = data.data.title;
                 $scope.eleDesc = function() {
                     return $sce.trustAsHtml(data.data.desc);  
@@ -157,12 +165,8 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         }
         else if(id == 2) {
             $scope.comListShow = false;
-            $scope.eleShow = true;
-            $scope.backShow = false;
-            $scope.upShow = true;
+            thirdLevel();
             $.get("/backend/getCulById/?id=5",function(data){
-                $scope.detailsShow = true;
-                $scope.blur ='blur';
                 $scope.eleTitle = data.data.title;
                 $scope.eleDesc = function() {
                     return $sce.trustAsHtml(data.data.desc);  
@@ -172,36 +176,26 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         }
     };
     $scope.goPos = function() {
-        $scope.detailsShow = true;
-        $scope.eleShow = true;
-        $scope.blur = 'blur';
+        thirdLevel();
         $scope.eleTitle = '位置信息';
         $scope.eleDesc = function() {
             return $sce.trustAsHtml('<img class="pos" src="/static/image/posimg.jpg"/>');  
         }();
     };
     $scope.goImg = function() {
-
         location.href = '';
     };
     $scope.up = function() {
-        $scope.upShow = false;
+        secondLevel();
+        $scope.eleShow = false;
         if($scope.type == 'product') {
             $scope.productListShow = true;
-            $scope.eleShow = false;
-            $scope.backShow = true;
-
         }
         else if($scope.type == 'com') {
             $scope.comListShow = true;
-            $scope.backShow = true; 
-            $scope.eleShow = false;
         }
         else if($scope.type == 'leader') {
             $scope.leaderListShow = true;
-            $scope.backShow = true; 
-            $scope.eleShow = false;
-
         }
     };
     $scope.close = function() {
@@ -211,6 +205,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         $scope.productShow = false;
         $scope.productListShow = false;
         $scope.blur = '';
+        $scope.copyShow = true;
         $scope.comShow = false ;
         $scope.comListShow = false;
         $scope.leaderListShow = false;
