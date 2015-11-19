@@ -17,9 +17,10 @@ include ./lib/header.jade
         section(class="page page1")
             div.background
                 div.nav=""
+                div.time-story(ng-click="goStory()")=""
+                div.download(ng-click="goDownload()")=""
                 div.bottom
-                    div.finger=""
-                    div.text=""
+                    div.finger 点击进入
         section(class="page page2 {{ blur }}")
             div.background
                 div.nav=""
@@ -92,7 +93,7 @@ include ./lib/header.jade
                             div.border=""
                             div.border-down=""
                         div.ele-desc
-                            img(ng-show="leaderImgShow==true",ng-src="{{ leaderImg }}",style="width:30%")
+                            img(ng-show="leaderImgShow==true",ng-src="{{ leaderImg }}",style="width:35%")
                             div.desc(ng-bind-html="eleDesc")
             div.tools
                 div.tool-bar

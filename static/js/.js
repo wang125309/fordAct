@@ -30760,7 +30760,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         }
     };
     $scope.goProductSettings = function() {
-        location.href = "";
+        location.href = "http://pan.baidu.com/s/1eQsIVR0";
     };
 
     $scope.goProductDetail = function(id) {
@@ -30873,7 +30873,13 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         }();
     };
     $scope.goImg = function() {
-        location.href = '';
+        location.href = 'http://pan.baidu.com/s/1bnofvXl';
+    };
+    $scope.goStory = function() {
+        location.href = 'http://51wephone.com/program/ford/index.html';
+    };
+    $scope.goDownload = function() {
+        location.href = 'http://pan.baidu.com/s/1c09ce8S';
     };
     $scope.up = function() {
         secondLevel();
@@ -30910,7 +30916,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
             window.onload = function(){
                 w = $(window).width();
                 h = $(window).height();
-                $(".finger").on('longTap',function(){
+                $(".finger").on('click',function(){
                     $(".page1").hide();
                     $(".page2").velocity("fadeIn");
                 });
