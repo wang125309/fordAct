@@ -17,8 +17,7 @@ include ./lib/header.jade
         section(class="page page1")
             div.background
                 div.nav=""
-                div.time-story(ng-click="goStory()")=""
-                div.download(ng-click="goDownload()")=""
+
                 div.bottom
                     div.finger 点击进入
         section(class="page page2 {{ blur }}")
@@ -40,7 +39,11 @@ include ./lib/header.jade
                             div.pos-btn.button(ng-click="goPos()") 位置信息
                         div.right
                             div.img-btn.button(ng-click="goImg()") 图片资料
-                div.bottom=""
+
+                div.bottom
+                    div.time-story(ng-click="goStory()")=""
+                    div.download(ng-click="goDownload()")=""
+
         div.details(ng-show="detailsShow==true",class="{{ detailsShow }}")
             div.main
                 div.close(ng-click="close()")=""
