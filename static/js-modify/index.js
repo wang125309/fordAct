@@ -194,7 +194,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         location.href = 'http://51wephone.com/program/ford/index.html';
     };
     $scope.goDownload = function() {
-        location.href = 'http://pan.baidu.com/s/1mgpjasS';
+        location.href = 'http://pan.baidu.com/s/1gdJLxWR';
     };
     $scope.up = function() {
         secondLevel();
