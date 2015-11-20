@@ -30760,7 +30760,7 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         }
     };
     $scope.goProductSettings = function() {
-        location.href = "http://pan.baidu.com/s/1eQsIVR0";
+        location.href = "http://pan.baidu.com/s/1c0HjEko";
     };
 
     $scope.goProductDetail = function(id) {
@@ -30873,13 +30873,13 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
         }();
     };
     $scope.goImg = function() {
-        location.href = 'http://pan.baidu.com/s/1bnofvXl';
+        location.href = 'http://pan.baidu.com/s/1pJkZiRL';
     };
     $scope.goStory = function() {
         location.href = 'http://51wephone.com/program/ford/index.html';
     };
     $scope.goDownload = function() {
-        location.href = 'http://pan.baidu.com/s/1c09ce8S';
+        location.href = 'http://pan.baidu.com/s/1mgpjasS';
     };
     $scope.up = function() {
         secondLevel();
