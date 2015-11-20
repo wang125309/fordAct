@@ -32,9 +32,10 @@ indexCtrl = angular.module('app',['ngSanitize']).controller('indexCtrl',['$scope
     
     $scope.goNews = function() {
         thirdLevel();
-        $scope.eleTitle = '新闻稿件';
+
         $scope.upShow = false;
         $.get("/backend/getNewsById/?id=1",function(data){
+            $scope.eleTitle = '长安福特重磅出击广州车展  福特金牛座上市售价24.88-34.88万元';
             $scope.eleDesc = function() {
                 return $sce.trustAsHtml(data.data.desc);  
             }();
